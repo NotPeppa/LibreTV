@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - LibreTV</title>
+    <meta name="description" content="LibreTV登录页面">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://images.icon-icons.com/38/PNG/512/retrotv_5520.png">
+    <link rel="apple-touch-icon" href="https://images.icon-icons.com/38/PNG/512/retrotv_5520.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .login-box {
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid #333;
+        }
+        
+        .login-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+        
+        .login-input:focus {
+            border-color: #fff;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+        
+        .login-btn {
+            background-image: linear-gradient(to right, #6366f1, #a855f7, #ec4899);
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-link {
+            color: #a855f7;
+            text-decoration: underline;
+            transition: color 0.2s ease;
+        }
+        
+        .info-link:hover {
+            color: #ec4899;
+        }
+    </style>
+</head>
+<body class="page-bg text-white flex items-center justify-center min-h-screen">
+    <div class="login-box w-full max-w-md p-8 rounded-lg shadow-xl">
+        <div class="text-center mb-8">
+            <div class="flex justify-center items-center mb-4">
+                <svg class="w-10 h-10 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                <h1 class="text-4xl font-bold gradient-text">LibreTV</h1>
+            </div>
+            <p class="text-gray-400">请输入访问密码以继续</p>
+        </div>
+        
+        <div id="error-message" class="hidden bg-red-900/50 text-red-200 p-3 rounded-lg mb-4 text-sm"></div>
+        
+        <form id="login-form" class="space-y-6">
+            <div>
+                <label for="accessCode" class="block text-sm font-medium text-gray-400 mb-1">访问密码</label>
+                <input type="password" id="accessCode" name="accessCode" 
+                       class="login-input w-full px-4 py-3 rounded-lg text-white focus:outline-none" 
+                       placeholder="请输入访问密码" required>
+            </div>
+            
+            <div>
+                <button type="submit" class="login-btn w-full py-3 rounded-lg text-white font-medium shadow-lg">
+                    访问
+                </button>
+            </div>
+            
+            <div class="text-center text-sm text-gray-500 mt-4">
+                <p>还没有访问密码？<a id="blog-link" href="#" class="info-link" target="_blank">点击获取</a></p>
+            </div>
+        </form>
+    </div>
+
+    <!-- 引入配置文件 -->
+    <script src="js/config.js"></script>
+    <!-- 引入身份验证模块 -->
+    <script src="js/auth.js"></script>
+    
+    <script>
+        // 如果用户已登录，直接重定向到首页
+        if (isLoggedIn()) {
+            const redirectUrl = new URLSearchParams(window.location.search).get('redirect') || 'index.html';
+            window.location.href = redirectUrl;
+        }
+        
+        // 设置博客链接
+        document.getElementById('blog-link').href = typeof AUTH_CONFIG !== 'undefined' && AUTH_CONFIG.blogPostUrl ? 
+            AUTH_CONFIG.blogPostUrl : 'https://blog.cipheror.com/86701aeddb51';
+        
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const accessCode = document.getElementById('accessCode').value;
+            const errorMessage = document.getElementById('error-message');
+            
+            // 使用auth.js中的登录函数验证访问密码
+            if (login(accessCode)) {
+                // 登录成功，获取登录前的页面或默认跳转到首页
+                const redirectUrl = new URLSearchParams(window.location.search).get('redirect') || 'index.html';
+                window.location.href = redirectUrl;
+            } else {
+                // 显示错误信息
+                errorMessage.textContent = '访问密码错误，请重试';
+                errorMessage.classList.remove('hidden');
+                
+                // 3秒后隐藏错误信息
+                setTimeout(() => {
+                    errorMessage.classList.add('hidden');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html> 

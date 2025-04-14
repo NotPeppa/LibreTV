@@ -32,9 +32,27 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- 引入配置文件 -->
+    <script src="js/config.js"></script>
+    <!-- 引入身份验证模块 -->
+    <script src="js/auth.js"></script>
+    <script>
+        // 在页面加载前检查登录状态
+        if (!isLoggedIn()) {
+            // 未登录，重定向到登录页面
+            window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.pathname.split('/').pop());
+        }
+    </script>
 </head>
 <body class="page-bg text-white">
     <div class="fixed top-4 right-4 z-50 flex items-center space-x-4">
+        <!-- 添加登出按钮 -->
+        <button onclick="logout()" class="bg-[#222] hover:bg-[#333] border border-[#333] hover:border-white rounded-lg px-4 py-2 transition-colors" aria-label="退出登录">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+        </button>
         <!-- 添加历史记录按钮 -->
         <button onclick="toggleHistory(event)" class="bg-[#222] hover:bg-[#333] border border-[#333] hover:border-white rounded-lg px-4 py-2 transition-colors" aria-label="观看历史">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -277,7 +295,6 @@
     }
     </script>
 
-    <script src="js/config.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/api.js"></script>
     <script src="js/app.js"></script>

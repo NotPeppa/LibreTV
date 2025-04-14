@@ -6,6 +6,18 @@
 	<title>关于我们 - LibreTV</title>
 	<script src="https://cdn.tailwindcss.com"></script>
 	<link rel="stylesheet" href="css/styles.css">
+	
+	<!-- 引入配置文件 -->
+    <script src="js/config.js"></script>
+	<!-- 引入身份验证模块 -->
+    <script src="js/auth.js"></script>
+    <script>
+        // 在页面加载前检查登录状态
+        if (!isLoggedIn()) {
+            // 未登录，重定向到登录页面
+            window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.pathname.split('/').pop());
+        }
+    </script>
 	<!-- ...existing head code... -->
 </head>
 <body class="page-bg text-white">
@@ -24,6 +36,7 @@
 		</main>
 		<footer class="mt-12 text-center">
 			<a href="index.html" class="text-gray-400 hover:text-white transition-colors">回到首页</a>
+			<button onclick="logout()" class="ml-4 text-gray-400 hover:text-white transition-colors">退出登录</button>
 		</footer>
 	</div>
 </body>

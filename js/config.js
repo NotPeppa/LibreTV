@@ -103,6 +103,10 @@ const API_SITES = {
         name: 'lsb资源',
         adult: true
     },
+    cjhwba: {
+        api: 'https://cjhwba.com',
+        name: '华为吧资源',
+    },
     huangcang: {
         api: 'https://hsckzy.vip',
         name: '黄色仓库',
@@ -156,7 +160,8 @@ const PLAYER_CONFIG = {
     filterAds: true,  // 是否启用广告过滤
     autoPlayNext: true,  // 默认启用自动连播功能
     adFilteringEnabled: true, // 默认开启分片广告过滤
-    adFilteringStorage: 'adFilteringEnabled' // 存储广告过滤设置的键名
+    adFilteringStorage: 'adFilteringEnabled', // 存储广告过滤设置的键名
+    autoLandscapeOnFullscreen: true // 全屏时自动切换到横屏模式
 };
 
 // 增加错误信息本地化
@@ -192,4 +197,10 @@ const CUSTOM_API_CONFIG = {
 };
 
 // 新增隐藏内置黄色采集站API的变量，默认为true
-const HIDE_BUILTIN_ADULT_APIS = true;
+const HIDE_BUILTIN_ADULT_APIS = false;
+
+// 用户认证配置
+const AUTH_CONFIG = {
+    accessCode: 'cipheror', // 访问密码
+    blogPostUrl: 'https://blog.cipheror.com/86701aeddb51' // 获取访问密码的博客文章地址
+};

@@ -2,7 +2,19 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=player.html">
+    <!-- 引入配置和身份验证 -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // 检查登录状态
+        if (!isLoggedIn()) {
+            // 未登录，重定向到登录页面
+            window.location.href = 'login.html?redirect=player.html';
+        } else {
+            // 已登录，重定向到播放器页面
+            window.location.href = 'player.html';
+        }
+    </script>
     <title>重定向到播放器</title>
 </head>
 <body>
