@@ -197,7 +197,7 @@ const CUSTOM_API_CONFIG = {
 };
 
 // 新增隐藏内置黄色采集站API的变量，默认为true
-const HIDE_BUILTIN_ADULT_APIS = false;
+const HIDE_BUILTIN_ADULT_APIS = true;
 
 // 用户认证配置
 const AUTH_CONFIG = {
